@@ -156,6 +156,11 @@ class AutoProjectedGradientDescent(EvasionAttack):
                             "If loss_type='difference_logits_ratio' the estimator has to to predict logits."
                         )
 
+                    if self.estimator.nb_classes <= 2:
+                        raise ValueError(  # pragma: no cover
+                            "Difference logits ratio loss requires at least 3 classes."
+                        )
+
                     class DifferenceLogitsRatioTensorFlowV2(TensorFlowV2Loss):
                         """
                         Callable class for Difference Logits Ratio loss in TensorFlow v2.
@@ -268,6 +273,11 @@ class AutoProjectedGradientDescent(EvasionAttack):
                         raise ValueError(  # pragma: no cover
                             "The provided estimator seems to predict probabilities. "
                             "If loss_type='difference_logits_ratio' the estimator has to to predict logits."
+                        )
+
+                    if self.estimator.nb_classes <= 2:
+                        raise ValueError(  # pragma: no cover
+                            "Difference logits ratio loss requires at least 3 classes."
                         )
 
                     class DifferenceLogitsRatioPyTorch(torch.nn.modules.loss._Loss):
